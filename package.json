@@ -1,0 +1,23 @@
+{
+  "name": "cadastro-alunos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "cadastro-alunos"
+  },
+  "keywords": [
+    "blockchain"
+  ],
+  "author": "jv.muca@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "solc": "^0.8.17",
+    "web3": "^1.8.1"
+  }
+}
