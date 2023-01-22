@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha StudentContractTest.js",
-    "compile" : "node ./scripts/compile.js"
+    "testStudentsContract": "npx mocha StudentContractTest.js",
+    "testCellPhoneContract": "npx mocha PhoneCompanyContractTest.js",
+    "compileStudent": "node ./scripts/compile.js",
+    "compileCellPhoneContract": "node ./scripts/compileCellPhoneContract.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,9 @@
   "author": "jv.muca@gmail.com",
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/web3": "^1.2.2",
+    "chai": "^4.3.7",
     "mocha": "^10.2.0",
     "solc": "^0.8.17",
     "web3": "^1.8.1"

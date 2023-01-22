@@ -64,6 +64,12 @@ contract CellPhoneCompanyContract {
         return address(this).balance;
      }
 
+     function getProduct(uint256 index) public view returns(Product memory) {
+
+        return products[index];
+
+     }
+
      function exchangeCustomerPointsByProduct(
         uint _productIndex
      ) public {
@@ -95,7 +101,7 @@ contract CellPhoneCompanyContract {
 
         require(amountAvailable >= _amountToTransfer, "Balance is not enough");
 
-        Customer memory customer = _enrolledCustomers[msg.sender];
+        Customer memory customer = _enrolledCustomers[_destinationAdress];
 
         require(isCustomerValid(customer), "Destination customer is invalid");
 
