@@ -39,7 +39,7 @@ contract TokenERC20 is IERC20{
     string public constant name = "sidDev";
     string public constant symbol = "SDV";
     uint8 public constant decimals = 18;
-    uint256 private _totalSupply;
+    uint256 private _totalSupply = 100;
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowed;
 

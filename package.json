@@ -6,6 +6,7 @@
   "scripts": {
     "testStudentsContract": "npx mocha StudentContractTest.js",
     "testCellPhoneContract": "npx mocha PhoneCompanyContractTest.js",
+    "testERC20Token": "npx mocha ERC20TokenTest.js",
     "compileStudent": "node ./scripts/compile.js",
     "compileCellPhoneContract": "node ./scripts/compileCellPhoneContract.js"
   },
