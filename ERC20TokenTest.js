@@ -12,12 +12,11 @@ let tokenOwner;
 let tokenSpender;
 let TokenERC20Contract;
 
-before(async() => {
+beforeEach(async() => {
     accounts = await web3.eth.getAccounts();
     contractOwner = accounts[0];
     tokenOwner = accounts[1];
     tokenSpender = accounts[2];
-
 
     TokenERC20Contract = 
         await new web3.eth.Contract(abiJson)
@@ -38,39 +37,74 @@ describe("Total supply", async() => {
 
 describe("Transfer", async () => {
     it("Should return true", async () => {
-        const wasTransfered = TokenERC20Contract.methods
-        .transfer(tokenOwner, 10)
-        .send({from: contractOwner, gas: 1000000})
-        .on('confirmed', (number, receipt) => {
-            return receipt
-        });
+        const wasTransfered = await TokenERC20Contract.methods
+        .transfer(tokenSpender, 10)
+        .send({from: contractOwner, gas: 1000000});
 
-        console.log(wasTransfered);
-        // assert.equal(Boolean(wasTransfered), true);
+        console.log(
+            "Receiver final balance: \n" + 
+            await TokenERC20Contract.methods
+            .balanceOf(tokenSpender)
+            .call({from: contractOwner, gas: 1000000})
+        )
+
+        assert.equal(wasTransfered.status, true);
 
     })
 })
 
 describe("Balance Of", async ()=> {
-    it("Should return the balance of 10", async () => {
+    it("Should return the balance of 1000", async () => {
             const balanceOf = await TokenERC20Contract.methods
             .balanceOf(contractOwner)
-            .call();
+            .call({from: contractOwner, gas: 1000000});
             
     console.log(balanceOf);
-    // assert.equal(Number(balanceOf), 10);
+    assert.equal(Number(balanceOf), 10000)
     });
-
-    // it("should return a balance of 10");
 })
 
 describe("Allowance", async () => {
     it("Should return a boolean that represents if a certain account is allowed or not to use funds from another wallet", async () => {
         const allowance = await TokenERC20Contract.methods
         .allowance(tokenOwner, tokenSpender)
-        .call();
+        .call({from: contractOwner, gas: 1000000});
 
         console.log(allowance);
         expect(Number(allowance)).to.be.a('Number');
+    })
+})
+
+describe("Approve", async() => {
+    it("Should allow a wallet to spend 10 token from another wallet", async() => {
+        const approve = await TokenERC20Contract.methods
+        .approve(tokenSpender, 10)
+        .send({from: contractOwner, gas: 1000000})
+
+        console.log("The amount that the token spender can spend from the contract owner tokens: " +
+        await TokenERC20Contract.methods
+        .allowance(contractOwner, tokenSpender)
+        .call({from: contractOwner, gas: 1000000})
+        )
+
+        assert.equal(approve.status, true);
+    })
+})
+
+describe("Transfer from", async() => {
+    it("Should return true after transfering a given amount from one wallet to another. It will depend on the amount allowed to be spent of the wallet from where the tokens are coming from", async() => {
+
+        await TokenERC20Contract.methods
+        .approve(tokenSpender, 10)
+        .send({from: contractOwner, gas: 1000000});
+
+        const transferFrom = await TokenERC20Contract.methods
+        .transferFrom(contractOwner, tokenOwner, 10)
+        .send({from: tokenSpender, gas: 1000000});
+
+        
+
+        console.log(transferFrom.status);
+        assert.equal(transferFrom.status, true)
     })
 })

@@ -8,7 +8,9 @@
     "testCellPhoneContract": "npx mocha PhoneCompanyContractTest.js",
     "testERC20Token": "npx mocha ERC20TokenTest.js",
     "compileStudent": "node ./scripts/compile.js",
-    "compileCellPhoneContract": "node ./scripts/compileCellPhoneContract.js"
+    "compileCellPhoneContract": "node ./scripts/compileCellPhoneContract.js",
+    "compileERC20TokenContract": "node ./scripts/compileERC20Token.js"
+
   },
   "repository": {
     "type": "git",
