@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "testStudentsContract": "npx mocha StudentContractTest.js",
-    "testCellPhoneContract": "npx mocha PhoneCompanyContractTest.js",
-    "testERC20Token": "npx mocha ERC20TokenTest.js",
+    "testStudentsContract": "npx mocha ./tests/StudentContractTest.js",
+    "testCellPhoneContract": "npx mocha ./tests/PhoneCompanyContractTest.js",
+    "testERC20Token": "npx mocha ./tests/ERC20TokenTest.js",
     "compileStudent": "node ./scripts/compile.js",
     "compileCellPhoneContract": "node ./scripts/compileCellPhoneContract.js",
-    "compileERC20TokenContract": "node ./scripts/compileERC20Token.js"
-
+    "compileERC20TokenContract": "node ./scripts/compileERC20Token.js",
+    "run-all-tests": "npm run testStudentsContract && npm run testCellPhoneContract && npm run testERC20Token"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "@types/chai": "^4.3.4",
     "@types/web3": "^1.2.2",
     "chai": "^4.3.7",
+    "ganache": "^7.8.0",
     "mocha": "^10.2.0",
     "solc": "^0.8.17",
     "web3": "^1.8.1"

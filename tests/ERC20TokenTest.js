@@ -1,16 +1,20 @@
 const assert = require('assert');
 const Web3 = require('web3');
-const {abiJson, bytecode} = require('./scripts/compileERC20Token');
+const {abiJson, bytecode} = require('../scripts/compileERC20Token');
 const chai = require('chai');
 const { should, expect } = require('chai');
 
-const web3 = new Web3('HTTP://127.0.0.1:7545');
+const web3 = new Web3('HTTP://127.0.0.1:8545');
 
 let accounts;
 let contractOwner;
 let tokenOwner;
 let tokenSpender;
 let TokenERC20Contract;
+
+console.log("------------------------------------------");
+console.log("Tests for ERC20 generic Token");
+console.log("------------------------------------------");
 
 beforeEach(async() => {
     accounts = await web3.eth.getAccounts();
