@@ -39,5 +39,4 @@ const compilerInput = {
   const gasEstimateExecution = contractEVM['gasEstimates']['creation']['executionCost'];
   const abiJson = output.contracts[contractName]['CellPhoneCompanyContract']['abi'];
 
-
   module.exports = { abiJson, bytecode };

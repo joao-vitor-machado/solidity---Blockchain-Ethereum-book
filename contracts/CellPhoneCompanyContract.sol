@@ -17,13 +17,13 @@ contract CellPhoneCompanyContract {
     address private _contractOwner;
     Product[] public products;
 
-    constructor() {
+    constructor() payable {
         _contractOwner = msg.sender;
 
         Product memory product0 = 
             Product({
                 productName: "Watch",
-                productPoints: 2,
+                productPoints: 1,
                 amountExchanged: 0
             });
 
@@ -95,25 +95,6 @@ contract CellPhoneCompanyContract {
         emit ProductExchanged(msg.sender, _productIndex, block.timestamp);
 
      }
-
-     function transferToAccount(address payable _destinationAdress, uint _amountToTransfer) public contractOwnerOnly {
-        uint256 amountAvailable = address(this).balance;
-
-        require(amountAvailable >= _amountToTransfer, "Balance is not enough");
-
-        Customer memory customer = _enrolledCustomers[_destinationAdress];
-
-        require(isCustomerValid(customer), "Destination customer is invalid");
-
-        amountAvailable -= _amountToTransfer;
-
-        assert(amountAvailable >= 0);
-
-        (bool success,) = _destinationAdress.call{value: _amountToTransfer}("");
-
-        require(success, "Could not transfer to the destination address");
-
-     } 
 
      function payMonthlyBill(uint _totalDueInWei) public payable {
             
