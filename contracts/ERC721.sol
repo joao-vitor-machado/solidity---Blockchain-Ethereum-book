@@ -5,10 +5,6 @@ interface IERC721 {
 
     function ownerOf(uint256 _tokenId) external view returns (address);
 
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) external payable;
-
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
-
     function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
 
     function approve(address _to, uint _tokenId) external payable;
@@ -33,6 +29,14 @@ contract TokenERC721 is IERC721 {
     mapping (address => uint256) private _balances;
     mapping (uint256 => address) private _tokenApprovals;
     mapping (address => mapping(address => bool)) private _operatorApprovals;
+    uint _id = 1;
+
+    function mint() public payable {
+        require(msg.value > 0, "not enough funds to mint a new token");
+        _owners[_id] = msg.sender;
+        _balances[msg.sender] = _id;
+        _id++;
+    }
 
     function balanceOf(
         address _owner
@@ -58,24 +62,18 @@ contract TokenERC721 is IERC721 {
         return owner;
     }
 
-    function safeTransferFrom(
-        address _from,
-        address _to,
-        uint256 _tokenId,
-        bytes memory data
-    ) external payable override {}
-
-    function safeTransferFrom(
-        address _from,
-        address _to,
-        uint256 _tokenId
-    ) external payable override {}
-
     function transferFrom(
         address _from,
         address _to,
         uint256 _tokenId
-    ) external payable override {}
+    ) external payable override {
+        require(_from != address(0) && _to != address(0), "addresses must be valid");
+        require(_tokenId <= _id, "this token doesn't exist");
+
+        _balances[_from] = 0;
+        _balances[_to] = _tokenId;
+        _owners[_tokenId] = _to;
+    }
 
     function approve(
         address _to,
